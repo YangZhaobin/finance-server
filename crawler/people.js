@@ -21,7 +21,7 @@ async function analyzeWebsite($) {
 
             let data = {
                 title: $a.text(),
-                url: URL + $a.attr('href'),
+                url: $a.attr('href'),
                 website_id,
                 type
             };
@@ -32,7 +32,6 @@ async function analyzeWebsite($) {
 
     Artical.addMultiArticals(articals)
         .then(data => {
-            console.info('addMultiArticals over!');
         });
     
     let $next = $('.headingNews').eq(0).find('.page_n').children().last();
@@ -41,6 +40,8 @@ async function analyzeWebsite($) {
         let nextUrl = URL + $next.attr('href');
 
         await crawlWebsite(nextUrl);
+    } else {
+        console.info('crawl people data over!');
     }
 }
 

@@ -4,7 +4,8 @@ const iconv = require('iconv-lite')
 
 // Utility function that downloads a URL and invokes
 // callback with the data.
-async function crawler(url) {
+// 得到url链接的html内容
+async function crawler(url, encodeType = 'GB2312') {
     return new Promise((resolve, reject) => {
         http.get(url, res => {
             let arr = [];
@@ -18,9 +19,9 @@ async function crawler(url) {
 
             res.on('end', () => {
                 let data = Buffer.concat(arr, length);
-
-                let change_data = iconv.decode(data, 'GB2312');  
-
+                
+                let change_data = iconv.decode(data, encodeType);
+                
                 resolve(change_data.toString());
             });
         }).on('error', err => {

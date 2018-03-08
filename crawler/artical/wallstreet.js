@@ -2,12 +2,12 @@
 const cheerio = require('cheerio');
 const server = require('../curl');
 
-const from = '新浪财经';
+const from = '华尔街见闻';
 
 function analyzeArtical($) {
-    let title = $('#artibodyTitle').html();
-    let content = $('#artibody').html();
-    let published_at = $('span.time-source').eq(0).html();
+    let title = $('.main-article .article__heading__title').eq(0).html();
+    let content = $('#endText').html();
+    let published_at = $('.main-article .article__heading__meta .meta-item__text').eq(0).html();
 
     return {
         title,

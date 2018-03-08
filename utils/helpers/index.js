@@ -14,7 +14,7 @@ const moment = require('moment');
  */
 exports.generateId = () => {
     const seed = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-',
-        length = 10;
+        length = 20;
     let idStr = '';
     for (let i = 0; i < length; i++) {
         const index = Math.ceil(Math.random() * 38),
@@ -49,6 +49,10 @@ exports.formatDate = (datetime, fmt) => {
     } catch(err) {
         return '---'
     }
+};
+
+exports.unescapeText = (txt) => {
+    return unescape(txt.replace(/&#x/g, '%u').replace(/;/g, ''));
 };
 
 exports.eq = (val1, val2, options) => {

@@ -132,6 +132,20 @@ Artical.findAllArticalsByWeb = (id, type, limit, offset) => {
     });
 };
 
+Artical.findArticalsByType = (type, limit, offset) => {
+    let where = {};
+    type && (where.type = type);
+    return Artical
+    .findAndCountAll({
+        where,
+        limit,
+        offset
+    })
+    .catch(err => {
+        throw err;
+    });
+};
+
 Artical.addArtical = ({title, url, website_id, type}) => {
     let id = helper.generateId();
     return Artical

@@ -11,7 +11,6 @@ function analyzeWebsite($) {
 }
 
 exports.crawlWebsite = async (url) => {
-
     let data = await server.crawler(url);
 
     let $ = cheerio.load(data);

@@ -3,12 +3,14 @@ const Artical = require('../controllers/artical');
 
 router.prefix('/artical');
 
-router.get('/:id', Artical.getArticalById);
+router.get('/detail/:id', Artical.getArticalById);
 
-router.get('/list', Artical.getAllArticals);
+router.get('/list', Artical.getAllArticals);  
 
 router.get('/list/site', Artical.getAllArticalsByWeb);
 
-router.get('/list/title', Artical.getAllArticalsByTitle);
+router.get('/list/type', Artical.getAllArticalsByType);
+
+router.get('/list/title', Artical.getAllArticalsByTitle); //
 
 module.exports = router;

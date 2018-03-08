@@ -2,15 +2,18 @@
 const cheerio = require('cheerio');
 const server = require('../curl');
 
+const from = '人民网';
+
 function analyzeArtical($) {
-    let title = $('h1').html();
+    let title = $('h1').eq(0).html();
     let content = $('#rwb_zw').html();
-    let published_at = $('.box01 .fl').html();
+    let published_at = $('.box01 .fl').eq(0).html();
 
     return {
         title,
         content,
-        published_at
+        published_at,
+        from
     };
 }
 

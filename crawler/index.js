@@ -5,7 +5,7 @@ const Sina = require('./sina');
 const Netease = require('./netease');
 const Tencent = require('./tencent');
 const People = require('./people');
-
+const Prcfe = require('./prcfe');
 
 async function beginCrawl() {
     // await Sina.crawlWebsite();
@@ -14,14 +14,15 @@ async function beginCrawl() {
 
     // await Tencent.crawlWebsite();
 
-    await People.crawlWebsite();
+    // await People.crawlWebsite();
 
-    console.info('crawl over!');
+    await Prcfe.crawlWebsite();
+
     return {
         code: 200,
         msg: `crawl over! ${new Date()}`
     };
-}
+};
 
 exports.runCrawl = () => {
     //设置每天凌晨执行

@@ -1,38 +1,73 @@
 
 const cheerio = require('cheerio');
 const server = require('./curl');
+const Artical = require('../db/model/artical');
 const WEB = require('../const/web_const');
 
 const website_id = 3;
 
-let url = WEB['netease'];
+const URL = WEB['netease'];
 
-function analyzeWebsite($) {
-    let $stock = $('.newsdata_list li').eq(1).children('.ndi_main').eq(0).children('.news_article');
-    let $finance = $('.newsdata_list li').eq(2).children('.ndi_main').children('.news_article');
-    let $fund = $('.newsdata_list li').eq(3).children('.ndi_main').children('.news_article');
-    let $licai = $('.newsdata_list li').eq(4).children('.ndi_main').children('.news_article');
+async function analyzeWebsite($) {
+    const type_arr = ['hongguan', 'international', 'stock', 'energy', 'comment', 'finance'];
+    const type_arr_cn = ['宏观', '国际', '股票', '能源', '评论', '财经'];
 
-
-    console.info($('.newsdata_list').children('.newsdata_item').length);
-    console.info($('.newsdata_list').html());
-    
-    // news_article;
-    $stock.each($item => {
-        console.info('url');
-        let url = $item.children('a').eq(0).attr('href');
-        console.info(url);
+    $('.nav_channel .common_wrap span').each(async (index, item) => {
+        let $item = $(item);
+        $item.children('a').each(async (i, a) => {
+            let $a = $(a);
+            let p = type_arr_cn.indexOf($a.html());
+            if(p !== -1) {
+                let type = type_arr[p];
+                let href = $a.attr('href');
+                await analyzeArticalList(href, type);
+            }
+        });
     });
-    return {
-        
-    };
-}
+};
 
-const crawlWebsite = async (u = url) => {
-    
+async function analyzeArticalList(url, type) {
+    let data = await server.crawler(url);
+    let $ = cheerio.load(data);
+
+    let $area_list = $('.area_list .col_l');
+
+    let articals = [];
+
+    $area_list.children('.list_item').each((index, item) => {
+        let $item = $(item);
+        let $a = $item.children('.item_top').eq(0).children('h2').eq(0).children('a').eq(0);
+
+        let data = {
+            title: $a.text(),
+            url: $a.attr('href'),
+            website_id,
+            type
+        };
+
+        articals.push(data);
+    });
+
+    Artical.addMultiArticals(articals)
+        .then(data => {
+        });
+
+    let $next = $area_list.children('.list_page').eq(0).children('li').last().prev();
+
+    if (!$next.hasClass('on')) {
+        let nextUrl = $next.children('a').eq(0).attr('href');
+
+        await analyzeArticalList(nextUrl, type);
+    } else {
+        console.info('crawl 163 data over!');
+    }
+};
+
+async function crawlWebsite (u = URL) {
+
     let data = await server.crawler(u);
 
-    let $ = cheerio.load(data);
+    let $ = cheerio.load(data, {decodeEntities: false});
             
     await analyzeWebsite($);
 };

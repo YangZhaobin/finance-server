@@ -1,16 +1,20 @@
 
 const cheerio = require('cheerio');
 const server = require('../curl');
+const Helpers = require('../../utils/helpers/index');
+
+const from = '网易新闻';
 
 function analyzeArtical($) {
-    let title = $('#epContentLeft > h1').html();
-    let content = $('#endText').html();
-    let published_at = $('.post_time_source').html();
+    let title = Helpers.unescapeText($('#epContentLeft > h1').html());
+    let content = Helpers.unescapeText($('#endText').html());
+    let published_at = Helpers.unescapeText($('.post_time_source').html());
 
     return {
         title,
         content,
-        published_at
+        published_at,
+        from
     };
 }
 
