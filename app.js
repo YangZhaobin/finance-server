@@ -9,6 +9,7 @@ const logger = require('koa-logger')
 const index = require('./routes/index')
 const artical = require('./routes/artical')
 const website = require('./routes/website')
+const classification = require('./routes/classification')
 
 const CONFIG = require('./config/app_config')
 
@@ -40,6 +41,7 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods())
 app.use(artical.routes(), artical.allowedMethods())
 app.use(website.routes(), website.allowedMethods())
+app.use(classification.routes(), classification.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

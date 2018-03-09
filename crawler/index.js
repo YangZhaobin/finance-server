@@ -1,20 +1,22 @@
 
 const later = require('later');
-
-const Sina = require('./sina');
-const Netease = require('./netease');
-const Tencent = require('./tencent');
-const People = require('./people');
-const Prcfe = require('./prcfe');
+const Artical = require('../db/model/artical');
+const Sina = require('./website/sina');
+const Netease = require('./website/netease');
+const Tencent = require('./website/tencent');
+const People = require('./website/people');
+const Prcfe = require('./website/prcfe');
 
 async function beginCrawl() {
     // await Sina.crawlWebsite();
 
-    // await Netease.crawlWebsite();
+    Artical.deleteAllArticals();
 
-    // await Tencent.crawlWebsite();
+    await Netease.crawlWebsite();
 
-    // await People.crawlWebsite();
+    await Tencent.crawlWebsite();
+
+    await People.crawlWebsite();
 
     await Prcfe.crawlWebsite();
 

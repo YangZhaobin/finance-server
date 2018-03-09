@@ -10,6 +10,7 @@
   },
   "author": "yangzhaobin",
   "dependencies": {
+    "baidu-aip-sdk": "^2.1.0",
     "cheerio": "^1.0.0-rc.2",
     "debug": "^2.6.3",
     "iconv-lite": "^0.4.19",
@@ -25,6 +26,7 @@
     "later": "^1.2.0",
     "moment": "^2.19.2",
     "mysql2": "^1.5.1",
+    "nodejieba": "^2.2.5",
     "pug": "^2.0.0-rc.1",
     "sequelize": "^4.23.2"
   },

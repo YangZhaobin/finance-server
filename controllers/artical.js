@@ -33,6 +33,11 @@ exports.getAllArticals = async(ctx, next) => {
     ctx.body = data;
 }
 
+exports.getAllArticalsNoPage = async(ctx, next) => {
+    let data = await Artical.findAllArticalsNoPage();
+    ctx.body = data;
+}
+
 exports.getAllArticalsByWeb = async(ctx, next) => {
     let params = ctx.request.query;
     let { site, type = '', limit = 10, offset = 0} = params;

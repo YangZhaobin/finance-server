@@ -47,7 +47,25 @@ const Artical = sequelize.define('artical', {
     tableName: 'artical'
 });
 
+Artical.findAllArticalsNoPage = () => {
+    return Artical
+    .findAndCountAll({
+        attributes: [
+            'id', 'website_id', 'title', 'url'
+        ],
+        include: [{
+            model: Website,
+            as: 'Website'
+        }]
+    })
+    .catch(err => {
+        throw err;
+    });
+};
+
 Artical.findAllArticals = (limit, offset) => {
+    limit = parseInt(limit);
+    offset = parseInt(offset);
     return Artical
     .findAndCountAll({
         limit,

@@ -1,8 +1,8 @@
 
 const cheerio = require('cheerio');
-const server = require('./curl');
-const Artical = require('../db/model/artical');
-const WEB = require('../const/web_const');
+const server = require('../curl');
+const Artical = require('../../db/model/artical');
+const WEB = require('../../const/web_const');
 
 const website_id = 3;
 

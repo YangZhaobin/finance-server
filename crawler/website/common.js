@@ -1,7 +1,7 @@
 
 
 const cheerio = require('cheerio');
-const server = require('./curl');
+const server = require('../curl');
 
 function analyzeWebsite($) {
 

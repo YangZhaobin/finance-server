@@ -1,9 +1,9 @@
 
 const cheerio = require('cheerio');
-const server = require('./curl');
-const WEB = require('../const/web_const');
-const Artical = require('../db/model/artical');
-const Helpers = require('../utils/helpers/index');
+const server = require('../curl');
+const WEB = require('../../const/web_const');
+const Artical = require('../../db/model/artical');
+const Helpers = require('../../utils/helpers/index');
 
 const website_id = 6;
 
