@@ -88,11 +88,7 @@ Artical.findById = (id) => {
     .findOne({
         where: {
             id: id
-        },
-        include: [{
-            model: Website,
-            as: 'Website'
-        }]
+        }
     })
     .catch(err => {
         throw err;
@@ -100,6 +96,8 @@ Artical.findById = (id) => {
 };
 
 Artical.findArticalsByTitle = (title, site, type, limit, offset) => {
+    limit = parseInt(limit);
+    offset = parseInt(offset);
     let where = {
         title: {
             $like: '%title%'
@@ -130,6 +128,8 @@ Artical.findArticalsByTitle = (title, site, type, limit, offset) => {
 };
 
 Artical.findAllArticalsByWeb = (id, type, limit, offset) => {
+    limit = parseInt(limit);
+    offset = parseInt(offset);
     let where = {};
     type && (where.type = type);
     return Artical
@@ -151,13 +151,22 @@ Artical.findAllArticalsByWeb = (id, type, limit, offset) => {
 };
 
 Artical.findArticalsByType = (type, limit, offset) => {
+    limit = parseInt(limit);
+    offset = parseInt(offset);
     let where = {};
     type && (where.type = type);
     return Artical
     .findAndCountAll({
         where,
         limit,
-        offset
+        offset,
+        attributes: [
+            'id', 'website_id', 'title', 'url'
+        ],
+        include: [{
+            model: Website,
+            as: 'Website'
+        }]
     })
     .catch(err => {
         throw err;

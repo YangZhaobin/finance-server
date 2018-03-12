@@ -21,7 +21,7 @@ async function analyzeWebsite($) {
 
             let data = {
                 title: $a.text(),
-                url: $a.attr('href'),
+                url: URL + $a.attr('href'),
                 website_id,
                 type
             };

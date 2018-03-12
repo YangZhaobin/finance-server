@@ -42,7 +42,29 @@ exports.getAllArticalsByWeb = async(ctx, next) => {
     let params = ctx.request.query;
     let { site, type = '', limit = 10, offset = 0} = params;
     let data = {};
-    data = await Artical.findAllArticalsByWeb(site, type, limit, offset);
+    let site_id = 1;
+    switch(site) {
+        case 'sina':
+            site_id = 1;
+            break;
+        case 'tencent':
+            site_id = 2;
+            break;
+        case 'netease':
+            site_id = 3;
+            break;
+        case 'people':
+            site_id = 4;
+            break;
+        case 'wallstreet':
+            site_id = 5;
+            break;
+        case 'prcfe':
+            site_id = 6;
+            break;
+    }
+
+    data = await Artical.findAllArticalsByWeb(site_id, type, limit, offset);
     ctx.body = data;
 }
 
