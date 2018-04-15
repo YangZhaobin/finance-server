@@ -2,7 +2,7 @@
  * @Author: yangzhaobin 
  * @Date: 2018-03-09 16:07:56 
  * @Last Modified by: yangzhaobin
- * @Last Modified time: 2018-03-09 19:26:52
+ * @Last Modified time: 2018-04-02 15:05:39
  */
 
 
@@ -63,6 +63,7 @@ function getObjMax(obj) {
 
 
 async function classify() {
+    await Classification.deleteAllTags();
     let articals = await Artical.findAllArticalsNoPage();
     let titles = articals.rows.map(item => {
         return item.title;

@@ -8,15 +8,21 @@ const WEB = require('../../const/web_const');
 const URL = WEB['people'];
 const website_id = 4;
 
+const MAX_COUNT = 50;
+
+let counter = 0;
+
 async function analyzeWebsite($) {
     const type_arr = ['hongguan', 'finance', 'industry', 'comment', 'international'];
 
     let articals = [];
 
     type_arr.forEach((type, index) => {
+        counter = 0;
+        
         let $news = $('.headingNews').eq(index + 1).children('.hdNews');
 
-        $news.each(async (i, ele) => {
+        $news.each((i, ele) => {
             let $a = $(ele).find('h5 > a');
 
             let data = {
@@ -26,14 +32,21 @@ async function analyzeWebsite($) {
                 type
             };
 
+            counter++;
+            if (counter > MAX_COUNT) {
+                return;
+            }
             articals.push(data);
         });
     });
 
-    Artical.addMultiArticals(articals)
-        .then(data => {
-        });
     
+    await Artical.addMultiArticals(articals);
+    
+    if (counter > MAX_COUNT) {
+        return;
+    }
+    // 下一页
     let $next = $('.headingNews').eq(0).find('.page_n').children().last();
 
     if (!$next.hasClass('common_current_page')) {
@@ -43,6 +56,7 @@ async function analyzeWebsite($) {
     } else {
         console.info('crawl people data over!');
     }
+    
 }
 
 async function crawlWebsite (u = URL) {

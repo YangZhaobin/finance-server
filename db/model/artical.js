@@ -96,15 +96,15 @@ Artical.findById = (id) => {
 };
 
 Artical.findArticalsByTitle = (title, site, type, limit, offset) => {
+    const Op = Sequelize.Op;
     limit = parseInt(limit);
     offset = parseInt(offset);
     let where = {
         title: {
-            $like: '%title%'
+            [Op.like]: `%${title}%`
         }
     };
     type && (where.type = type);
-
     let subWhere = {};
     site && (subWhere.id = site);
 

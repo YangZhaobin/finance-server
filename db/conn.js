@@ -17,8 +17,8 @@ const {
     db_name,
     user,
     password
-// } = CONFIG[process.env.CMS_ENV];
-} = CONFIG['development'];
+} = CONFIG[process.env.NODE_ENV];
+// } = CONFIG['development'];
 
 try {
     module.exports = new Sequelize(

@@ -1,0 +1,29 @@
+{
+    "apps" : [{
+        "name" : "finance",
+        "script": "bin/www",
+        "watch":[],
+        "env": {
+            "COMMON_VARIABLE": "true"
+        },
+        "env_production": {
+            "NODE_ENV": "production"
+        },
+        "log_date_format":"YYYY-MM-DD HH:mm Z"
+    }],
+    "deploy": {
+        "production": {
+            "user": "yangzb",
+            "host": ["47.94.1.113"],
+            "port": "22",
+	        "ref": "origin/master",
+            "repo": "git@github.com:YangZhaobin/finance-server.git",
+            "post-deploy": "cnpm i && pm2 startOrRestart ecosystem.json --env production",
+            "path": "/www/finance/production",
+            "ssh_options": "StrictHostKeyChecking=no",
+            "env": {
+                "NODE_ENV": "production"
+            }
+        }
+    }
+}

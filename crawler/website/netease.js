@@ -6,6 +6,10 @@ const WEB = require('../../const/web_const');
 
 const website_id = 3;
 
+const MAX_COUNT = 50;
+
+let counter = 0;
+
 const URL = WEB['netease'];
 
 async function analyzeWebsite($) {
@@ -21,6 +25,7 @@ async function analyzeWebsite($) {
                 let type = type_arr[p];
                 let href = $a.attr('href');
                 await analyzeArticalList(href, type);
+                counter = 0;
             }
         });
     });
@@ -34,6 +39,8 @@ async function analyzeArticalList(url, type) {
 
     let articals = [];
 
+    let flag = 0;
+
     $area_list.children('.list_item').each((index, item) => {
         let $item = $(item);
         let $a = $item.children('.item_top').eq(0).children('h2').eq(0).children('a').eq(0);
@@ -45,13 +52,19 @@ async function analyzeArticalList(url, type) {
             type
         };
 
+        counter++;
+        if (counter > MAX_COUNT) {
+            return;
+        }
         articals.push(data);
     });
 
-    Artical.addMultiArticals(articals)
-        .then(data => {
-        });
+    await Artical.addMultiArticals(articals);
 
+    if (counter > MAX_COUNT) {
+        return;
+    }
+    // 下一页
     let $next = $area_list.children('.list_page').eq(0).children('li').last().prev();
 
     if (!$next.hasClass('on')) {

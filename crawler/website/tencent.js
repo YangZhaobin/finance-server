@@ -9,6 +9,10 @@ const website_id = 2;
 
 let URL = WEB['tencent'];
 
+const MAX_COUNT = 50;
+
+let counter = 0;
+
 let pageURL = (pageType, pageNum) => {
     return 'http://finance.qq.com/c/' + pageType + 'llist_' + pageNum + '.htm';
 };
@@ -39,6 +43,7 @@ async function analyzeArticalListPage(url, type) {
     for(let i = 0; i <= pageCount; i++) {
         let pageType = url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('.'));
         await analyzeArticalList(pageURL(pageType, i), type);
+        counter = 0;
     }
 };
 
@@ -61,12 +66,14 @@ async function analyzeArticalList(url, type) {
             type
         };
 
+        counter++;
+        if (counter > MAX_COUNT) {
+            return;
+        }
         articals.push(data);
     });
 
-    Artical.addMultiArticals(articals)
-        .then(data => {
-        });
+    await Artical.addMultiArticals(articals);
 }
 
 const crawlWebsite = async (u = URL) => {

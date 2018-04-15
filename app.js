@@ -5,11 +5,13 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
-const cors = require('koa-cors');
+const cors = require('koa-cors')
 const index = require('./routes/index')
 const artical = require('./routes/artical')
 const website = require('./routes/website')
 const classification = require('./routes/classification')
+
+app.context.logger = require('./logger')('app');
 
 const CONFIG = require('./config/app_config')
 app.use(cors())
@@ -30,12 +32,14 @@ app.use(views(__dirname + '/views', {
 }))
 
 // logger
-app.use(async (ctx, next) => {
+app.use(async(ctx, next) => {
   const start = new Date()
   await next()
   const ms = new Date() - start
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
+
+require('./middlewares/register_spider')(app.context);
 
 // routes
 app.use(index.routes(), index.allowedMethods())

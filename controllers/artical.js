@@ -24,6 +24,7 @@ exports.getArticalById = async(ctx, next) => {
         artical = await CrawlerPrcfe.crawlArtical(data.url);
     }
     ctx.body = artical;
+    return next();
 }
 
 exports.getAllArticals = async(ctx, next) => {
@@ -31,11 +32,13 @@ exports.getAllArticals = async(ctx, next) => {
     let { limit = 10, offset = 0} = params;
     let data = await Artical.findAllArticals(limit, offset);
     ctx.body = data;
+    return next();
 }
 
 exports.getAllArticalsNoPage = async(ctx, next) => {
     let data = await Artical.findAllArticalsNoPage();
     ctx.body = data;
+    return next();
 }
 
 exports.getAllArticalsByWeb = async(ctx, next) => {
@@ -66,14 +69,37 @@ exports.getAllArticalsByWeb = async(ctx, next) => {
 
     data = await Artical.findAllArticalsByWeb(site_id, type, limit, offset);
     ctx.body = data;
+    return next();
 }
 
 exports.getAllArticalsByTitle = async(ctx, next) => {
     let params = ctx.request.query;
     let { title, site = '', type = '', limit = 10, offset = 0 } = params;
     let data = {};
-    data = await Artical.findArticalsByTitle(title, site, type, limit, offset);
+    let site_id;
+    switch(site) {
+        case 'sina':
+            site_id = 1;
+            break;
+        case 'tencent':
+            site_id = 2;
+            break;
+        case 'netease':
+            site_id = 3;
+            break;
+        case 'people':
+            site_id = 4;
+            break;
+        case 'wallstreet':
+            site_id = 5;
+            break;
+        case 'prcfe':
+            site_id = 6;
+            break;
+    }
+    data = await Artical.findArticalsByTitle(title, site_id, type, limit, offset);
     ctx.body = data;
+    return next();
 }
 
 exports.getAllArticalsByType = async(ctx, next) => {
@@ -82,4 +108,5 @@ exports.getAllArticalsByType = async(ctx, next) => {
     let data = {};
     data = await Artical.findArticalsByType(type, limit, offset);
     ctx.body = data;
+    return next();
 }

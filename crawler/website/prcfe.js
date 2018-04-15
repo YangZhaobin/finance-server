@@ -9,6 +9,10 @@ const website_id = 6;
 
 let URL = WEB['prcfe'];
 
+const MAX_COUNT = 50;
+
+let counter = 0;
+
 async function analyzeWebsite($) {
     const type_arr = ['hongguan', 'international', 'stock', 'energy', 'comment', 'finance', 'industry', 'licai'];
     const type_arr_cn = ['宏观', '国际', '股票', '能源', '评论', '金融', '产业', '理财'];
@@ -22,6 +26,7 @@ async function analyzeWebsite($) {
             let type = type_arr[p];
             let href = $a.attr('href');
             await analyzeArticalList(href, type);
+            counter = 0;
         }
     });
 };
@@ -45,13 +50,19 @@ async function analyzeArticalList(url, type) {
             type
         };
 
+        counter++;
+        if (counter > MAX_COUNT) {
+            return;
+        }
         articals.push(data);
     });
 
-    Artical.addMultiArticals(articals)
-        .then(data => {
-        });
+    await Artical.addMultiArticals(articals);
 
+    if (counter > MAX_COUNT) {
+        return;
+    }
+    // 下一页
     let $next = $('.main-left .pagination').eq(0).children('a').eq(-2);
 
     if ($next.text() === '下一页') {
@@ -61,6 +72,7 @@ async function analyzeArticalList(url, type) {
     } else {
         console.info('crawl prcfe data over!');
     }
+    
 };
 
 const crawlWebsite = async (u = URL) => {

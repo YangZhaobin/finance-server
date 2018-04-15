@@ -26,7 +26,7 @@ async function beginCrawl() {
     };
 };
 
-exports.runCrawl = () => {
+exports.runCrawl = async () => {
     //设置每天凌晨执行
     later.parse.recur().on(7).dayOfWeek().on('00:00:00').time();
 
@@ -44,15 +44,14 @@ exports.runCrawl = () => {
     //         });
     // }, sched);
 
-    beginCrawl()
-        .then(data => {
-            if (data.code === 200) {
-                console.info(data.msg);
-            }
-        })
-        .catch(err => {
-            console.info(err);
-        });
+    try {
+        let data = await beginCrawl();
+        if (data.code === 200) {
+            console.info(data.msg);
+        }
+    } catch (err) {
+        console.info(err);
+    }
 };
 
 

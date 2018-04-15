@@ -8,6 +8,10 @@ const website_id = 1;
 
 let url = WEB['sina'];
 
+const MAX_COUNT = 100;
+
+let couter = 0;
+
 async function analyzeWebsite($) {
     const type_arr = ['hongguan', 'international', 'stock', 'energy', 'comment', 'finance'];
     const type_arr_cn = ['宏观', '国际', '股票', '能源', '评论', '财经'];

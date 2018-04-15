@@ -14,5 +14,13 @@ module.exports = {
         user: 'root',
         password: '123456',
         tokenKey: ''
+    },
+    production: {
+        host: '47.94.1.113',
+        db_name: 'finance',
+        port: 3306,
+        user: 'root',
+        password: '123456',
+        tokenKey: ''
     }
 };
