@@ -18,7 +18,7 @@
             "port": "22",
 	        "ref": "origin/master",
             "repo": "git@github.com:YangZhaobin/finance-server.git",
-            "post-deploy": "cnpm i && pm2 startOrRestart ecosystem.json --env production",
+            "post-deploy": "npm install && pm2 startOrRestart ecosystem.json --env production",
             "path": "/www/finance/production",
             "ssh_options": "StrictHostKeyChecking=no",
             "env": {
