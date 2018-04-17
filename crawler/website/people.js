@@ -3,12 +3,13 @@ const cheerio = require('cheerio');
 
 const server = require('../curl');
 const Artical = require('../../db/model/artical');
-const WEB = require('../../const/web_const');
+const config = require('../../const/web_const');
 
-const URL = WEB['people'];
-const website_id = 4;
+const website_id = config.people.id;
 
-const MAX_COUNT = 50;
+const MAX_COUNT = config.people.max;
+
+const URL = config.people.url;
 
 let counter = 0;
 

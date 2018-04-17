@@ -17,7 +17,7 @@ const CONFIG = require('./config/app_config')
 app.use(cors())
 // error handler
 onerror(app)
-app.use(require('./controllers/error'));
+app.use(require('./middlewares/error'));
 
 // middlewares
 app.use(bodyparser({
@@ -54,4 +54,4 @@ app.on('error', (err, ctx) => {
 
 app.listen(CONFIG['port']);
 
-module.exports = app
+module.exports = app;

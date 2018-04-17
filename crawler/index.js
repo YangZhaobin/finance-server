@@ -1,24 +1,27 @@
 
 const later = require('later');
 const Artical = require('../db/model/artical');
-const Sina = require('./website/sina');
 const Netease = require('./website/netease');
 const Tencent = require('./website/tencent');
 const People = require('./website/people');
 const Prcfe = require('./website/prcfe');
+const Wallstreet = require('./website/wallstreet');
+const News10jqka = require('./website/10jqka');
 
 async function beginCrawl() {
-    // await Sina.crawlWebsite();
-
     Artical.deleteAllArticals();
 
-    await Netease.crawlWebsite();
+    // await Netease.crawlWebsite();
 
-    await Tencent.crawlWebsite();
+    // await Tencent.crawlWebsite();
 
-    await People.crawlWebsite();
+    // await People.crawlWebsite();
 
-    await Prcfe.crawlWebsite();
+    // await Prcfe.crawlWebsite();
+
+    await Wallstreet.crawlWebsite();
+    
+    // await News10jqka.crawlWebsite();
 
     return {
         code: 200,

@@ -1,15 +1,15 @@
 
 const cheerio = require('cheerio');
 const server = require('../curl');
-const WEB = require('../../const/web_const');
+const config = require('../../const/web_const');
 const Artical = require('../../db/model/artical');
 const Helpers = require('../../utils/helpers/index');
 
-const website_id = 6;
+const website_id = config.prcfe.id;
 
-let URL = WEB['prcfe'];
+const MAX_COUNT = config.prcfe.max;
 
-const MAX_COUNT = 50;
+const URL = config.prcfe.url;
 
 let counter = 0;
 

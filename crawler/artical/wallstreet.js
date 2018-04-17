@@ -1,8 +1,9 @@
 
 const cheerio = require('cheerio');
 const server = require('../curl');
+const config = require('../../const/web_const');
 
-const from = '华尔街见闻';
+const from = config.wallstreet.cn;
 
 function analyzeArtical($) {
     let title = $('.main-article .article__heading__title').eq(0).html();

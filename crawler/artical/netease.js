@@ -2,8 +2,9 @@
 const cheerio = require('cheerio');
 const server = require('../curl');
 const Helpers = require('../../utils/helpers/index');
+const config = require('../../const/web_const');
 
-const from = '网易新闻';
+const from = config.netease.cn;
 
 function analyzeArtical($) {
     let title = Helpers.unescapeText($('#epContentLeft > h1').html());

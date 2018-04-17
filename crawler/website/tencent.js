@@ -2,14 +2,14 @@
 const cheerio = require('cheerio');
 const server = require('../curl');
 const Artical = require('../../db/model/artical');
-const WEB = require('../../const/web_const');
+const config = require('../../const/web_const');
 const Helpers = require('../../utils/helpers/index');
 
-const website_id = 2;
+const website_id = config.tencent.id;
 
-let URL = WEB['tencent'];
+const MAX_COUNT = config.tencent.max;
 
-const MAX_COUNT = 50;
+const URL = config.tencent.url;
 
 let counter = 0;
 

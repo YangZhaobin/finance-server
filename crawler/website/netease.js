@@ -2,15 +2,15 @@
 const cheerio = require('cheerio');
 const server = require('../curl');
 const Artical = require('../../db/model/artical');
-const WEB = require('../../const/web_const');
+const config = require('../../const/web_const');
 
-const website_id = 3;
+const website_id = config.netease.id;
 
-const MAX_COUNT = 50;
+const MAX_COUNT = config.netease.max;
+
+const URL = config.netease.url;
 
 let counter = 0;
-
-const URL = WEB['netease'];
 
 async function analyzeWebsite($) {
     const type_arr = ['hongguan', 'international', 'stock', 'energy', 'comment', 'finance'];

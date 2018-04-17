@@ -2,8 +2,9 @@
 const cheerio = require('cheerio');
 const server = require('../curl');
 const Helpers = require('../../utils/helpers/index');
+const config = require('../../const/web_const');
 
-const from = '中国财经网';
+const from = config.prcfe.cn;
 
 function analyzeArtical($) {
     let title = Helpers.unescapeText($('.main h1.h1 .fl').eq(0).html());

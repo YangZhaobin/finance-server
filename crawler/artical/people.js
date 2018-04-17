@@ -1,8 +1,9 @@
 
 const cheerio = require('cheerio');
 const server = require('../curl');
+const config = require('../../const/web_const');
 
-const from = '人民网';
+const from = config.people.cn;
 
 function analyzeArtical($) {
     let title = $('h1').eq(0).html();
