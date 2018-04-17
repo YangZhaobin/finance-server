@@ -2,7 +2,7 @@
  * @Author: yangzhaobin 
  * @Date: 2018-03-09 16:07:56 
  * @Last Modified by: yangzhaobin
- * @Last Modified time: 2018-04-02 15:05:39
+ * @Last Modified time: 2018-04-17 20:29:14
  */
 
 
@@ -55,7 +55,7 @@ function getObjMax(obj) {
         if (obj[key] === max) {
            return {
                'word': key,
-               'num': obj[key]
+               'count': obj[key]
            }; 
         }
     }
@@ -78,6 +78,7 @@ async function classify() {
         chars.push(max);
         pos[max['word']] = 0;
     }
+    await Classification.addMultiTags(chars);
     return chars;
 };
 

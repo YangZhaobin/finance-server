@@ -7,21 +7,24 @@ const People = require('./website/people');
 const Prcfe = require('./website/prcfe');
 const Wallstreet = require('./website/wallstreet');
 const News10jqka = require('./website/10jqka');
+const Classify = require('./classify');
 
 async function beginCrawl() {
     Artical.deleteAllArticals();
 
-    // await Netease.crawlWebsite();
+    await Netease.crawlWebsite();
 
-    // await Tencent.crawlWebsite();
+    await Tencent.crawlWebsite();
 
-    // await People.crawlWebsite();
+    await People.crawlWebsite();
 
-    // await Prcfe.crawlWebsite();
+    await Prcfe.crawlWebsite();
 
     await Wallstreet.crawlWebsite();
     
-    // await News10jqka.crawlWebsite();
+    await News10jqka.crawlWebsite();
+
+    await Classify.classify();
 
     return {
         code: 200,

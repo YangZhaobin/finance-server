@@ -4,7 +4,7 @@
  * @Author: yangzhaobin 
  * @Date: 2018-03-09 15:34:57 
  * @Last Modified by: yangzhaobin
- * @Last Modified time: 2018-03-09 15:47:28
+ * @Last Modified time: 2018-04-17 20:36:32
  */
 
 
@@ -20,8 +20,13 @@ const Classification = sequelize.define('classification', {
         autoIncrement: true
     },
     // 分类标签名
-    tag: {
+    word: {
         type: Sequelize.STRING,
+        allowNull: true
+    },
+    // 出现次数
+    count: {
+        type: Sequelize.INTEGER,
         allowNull: true
     }
 }, {
