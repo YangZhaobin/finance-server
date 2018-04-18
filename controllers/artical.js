@@ -1,7 +1,6 @@
 const Artical = require('../db/model/artical');
 const CrawlerNetease = require('../crawler/artical/netease');
 const CrawlerPeople = require('../crawler/artical/people');
-const CrawlerSina = require('../crawler/artical/sina');
 const CrawlerTencent = require('../crawler/artical/tencent');
 const CrawlerPrcfe = require('../crawler/artical/prcfe');
 const Website = require('../db/model/website');
@@ -13,7 +12,7 @@ exports.getArticalById = async(ctx, next) => {
 
     let artical = {};
     if (data.website_id === 1) {
-        artical = await CrawlerSina.crawlArtical(data.url);
+        // artical = await CrawlerSina.crawlArtical(data.url);
     } else if (data.website_id === 2) {
         artical = await CrawlerTencent.crawlArtical(data.url);
     } else if (data.website_id === 3) {
