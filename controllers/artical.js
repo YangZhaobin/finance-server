@@ -51,6 +51,9 @@ exports.getAllArticalsByWeb = async(ctx, next) => {
     let params = ctx.request.query;
     let { site, type = '', limit = 10, offset = 0} = params;
     let data = {};
+    if (site === '10jqka') {
+        site = 'new10jqka';
+    }
     let site_id = config[site].id;
     data = await Artical.findAllArticalsByWeb(site_id, type, limit, offset);
     ctx.body = data;
@@ -61,27 +64,11 @@ exports.getAllArticalsByTitle = async(ctx, next) => {
     let params = ctx.request.query;
     let { title, site = '', type = '', limit = 10, offset = 0 } = params;
     let data = {};
-    let site_id;
-    switch(site) {
-        case 'sina':
-            site_id = 1;
-            break;
-        case 'tencent':
-            site_id = 2;
-            break;
-        case 'netease':
-            site_id = 3;
-            break;
-        case 'people':
-            site_id = 4;
-            break;
-        case 'wallstreet':
-            site_id = 5;
-            break;
-        case 'prcfe':
-            site_id = 6;
-            break;
+    if (site === '10jqka') {
+        site = 'new10jqka';
     }
+    let site_id;
+    site && (site_id = config[site].id);
     data = await Artical.findArticalsByTitle(title, site_id, type, limit, offset);
     ctx.body = data;
     return next();
