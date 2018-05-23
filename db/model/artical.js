@@ -12,7 +12,6 @@ const sequelize = require('../conn');
 const Sequelize = require('sequelize');
 
 const Website = require('./website');
-
 const helper = require('../../utils/helpers/index');
 
 const Artical = sequelize.define('artical', {
@@ -41,6 +40,11 @@ const Artical = sequelize.define('artical', {
     type: {
         type: Sequelize.STRING,
         allowNull: false
+    },
+    // 时间
+    time: {
+        type: Sequelize.STRING,
+        allowNull: true
     }
 }, {
     timestamps: false,
@@ -51,7 +55,7 @@ Artical.findAllArticalsNoPage = () => {
     return Artical
     .findAndCountAll({
         attributes: [
-            'id', 'website_id', 'title', 'url'
+            'id', 'website_id', 'title', 'url', 'time'
         ],
         include: [{
             model: Website,
@@ -71,7 +75,7 @@ Artical.findAllArticals = (limit, offset) => {
         limit,
         offset,
         attributes: [
-            'id', 'website_id', 'title', 'url'
+            'id', 'website_id', 'title', 'url', 'time'
         ],
         include: [{
             model: Website,
@@ -114,7 +118,7 @@ Artical.findArticalsByTitle = (title, site, type, limit, offset) => {
         offset,
         limit,
         attributes: [
-            'id', 'title', 'url'
+            'id', 'title', 'url', 'time'
         ],
         include: [{
             model: Website,
@@ -161,12 +165,33 @@ Artical.findArticalsByType = (type, limit, offset) => {
         limit,
         offset,
         attributes: [
-            'id', 'website_id', 'title', 'url'
+            'id', 'website_id', 'title', 'url', 'time'
         ],
         include: [{
             model: Website,
             as: 'Website'
         }]
+    })
+    .catch(err => {
+        throw err;
+    });
+};
+
+Artical.findWebsitesByType = (type) => {
+    let where = {};
+    type && (where.type = type);
+    return Artical
+    .findAll({
+        where,
+        distinct: true,
+        attributes: [
+            [Sequelize.literal('DISTINCT `website_id`'), 'website_id']
+            // 'website_id'
+        ]
+        // include: [{
+        //     model: Website,
+        //     as: 'Website'
+        // }]
     })
     .catch(err => {
         throw err;
@@ -232,5 +257,6 @@ Website.hasMany(Artical, {
     foreignKey: 'website_id',
     as: 'Artical'
 });
+
 
 module.exports = Artical;

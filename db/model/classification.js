@@ -4,7 +4,7 @@
  * @Author: yangzhaobin 
  * @Date: 2018-03-09 15:34:57 
  * @Last Modified by: yangzhaobin
- * @Last Modified time: 2018-04-17 20:36:32
+ * @Last Modified time: 2018-05-13 20:40:46
  */
 
 
@@ -37,6 +37,19 @@ const Classification = sequelize.define('classification', {
 Classification.findAllTags = () => {
     return Classification
     .findAll()
+    .catch(err => {
+        throw err;
+    });
+};
+
+Classification.findAllTagsWithPage = (limit, offset) => {
+    limit = parseInt(limit);
+    offset = parseInt(offset);
+    return Classification
+    .findAndCountAll({
+        limit,
+        offset
+    })
     .catch(err => {
         throw err;
     });

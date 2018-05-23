@@ -1,4 +1,5 @@
 
+const logger = require('../../logger')('task');
 const cheerio = require('cheerio');
 const server = require('../curl');
 const Artical = require('../../db/model/artical');
@@ -56,6 +57,7 @@ async function analyzeArticalList(url, type) {
     let articals = [];
 
     $area_list.children('.Q-tpWrap').each((index, item) => {
+        
         let $item = $(item);
         let $a = $item.children('em').eq(0).children('a').eq(0);
 
@@ -73,7 +75,10 @@ async function analyzeArticalList(url, type) {
         articals.push(data);
     });
 
-    await Artical.addMultiArticals(articals);
+    await Artical.addMultiArticals(articals)
+        .catch((error) => {
+            logger.info('spider tencent data error', error);
+        });
 }
 
 const crawlWebsite = async (u = URL) => {

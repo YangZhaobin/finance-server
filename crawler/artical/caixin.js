@@ -1,15 +1,16 @@
 
 const cheerio = require('cheerio');
-const config = require('../../const/web_const');
 const server = require('../curl');
 const Helpers = require('../../utils/helpers/index');
+const config = require('../../const/web_const');
 
-const from = config.tencent.cn;
+const from = config.caixin.cn;
 
 function analyzeArtical($, url) {
-    let title = Helpers.unescapeText($('.qq_conent .LEFT h1').html());
-    let content = Helpers.unescapeText($('.qq_conent .content-article').html());
-    let published_at = Helpers.unescapeText($('.qq_conent .a-src-time').html());
+    let title = $('#conTit h1').text().trim();
+    let content = $('#Main_Content_Val').html();
+    let published_at = $('#artInfo').text().split('来源于')[0].trim();
+
     content = `
         ${content}
         <br>
@@ -17,6 +18,7 @@ function analyzeArtical($, url) {
         <br>
         <br>
         <br>
+        <p>原文收费， 了解更多请浏览原文。</p>
         <p>原文地址： <a href="${url}" target="_blank">${title}</a></p>
     `;
     return {
@@ -30,8 +32,8 @@ function analyzeArtical($, url) {
 
 exports.crawlArtical = async (url) => {
 
-    let data = await server.crawler(url);
-    
+    let data = await server.crawler(url, 'utf-8');
+
     let $ = cheerio.load(data);
             
     let artical = await analyzeArtical($, url);

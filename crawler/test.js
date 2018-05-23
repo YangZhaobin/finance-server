@@ -4,9 +4,6 @@ const C = require('./curl');
 const Artical = require('../db/model/artical');
 
 Runner.runCrawl().then(() => {
-    console.info('===========================');
-    console.info('===========================');
-    console.info('===========================');
 });
 
 // Artical.deleteAllArticals();

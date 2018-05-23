@@ -15,4 +15,6 @@ router.get('/list/type', Artical.getAllArticalsByType);
 
 router.get('/list/title', Artical.getAllArticalsByTitle); //
 
+router.get('/weblist/type', Artical.getAllWebsitesByType);
+
 module.exports = router;

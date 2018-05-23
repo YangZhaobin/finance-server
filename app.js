@@ -1,4 +1,5 @@
 const Koa = require('koa')
+const session = require('koa-session');
 const app = new Koa()
 const views = require('koa-views')
 const json = require('koa-json')
@@ -10,10 +11,12 @@ const index = require('./routes/index')
 const artical = require('./routes/artical')
 const website = require('./routes/website')
 const classification = require('./routes/classification')
+const user = require('./routes/user')
 
 app.context.logger = require('./logger')('app');
 
 const CONFIG = require('./config/app_config')
+
 app.use(cors())
 // error handler
 onerror(app)
@@ -46,6 +49,7 @@ app.use(index.routes(), index.allowedMethods())
 app.use(artical.routes(), artical.allowedMethods())
 app.use(website.routes(), website.allowedMethods())
 app.use(classification.routes(), classification.allowedMethods())
+app.use(user.routes(), user.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

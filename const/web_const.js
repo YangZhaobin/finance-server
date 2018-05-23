@@ -12,7 +12,7 @@ module.exports = {
     },
     tencent: {
         id: 2,
-        cn: '网易新闻',
+        cn: '腾讯新闻',
         url: 'http://finance.qq.com',
         max
     },
@@ -36,7 +36,7 @@ module.exports = {
     },
     prcfe: {
         id: 6,
-        cn: '中国财经网',
+        cn: '中国财经新闻网',
         url: 'http://www.prcfe.com',
         max
     },
@@ -44,6 +44,30 @@ module.exports = {
         id: 7,
         cn: '同花顺财经',
         url: 'http://news.10jqka.com.cn/',
+        max
+    },
+    caixin: {
+        id: 9,
+        cn: '财新网',
+        url: 'http://www.caixin.com/',
+        max
+    },
+    jrj: {
+        id: 10,
+        cn: '金融界',
+        url: 'http://www.jrj.com.cn/',
+        max
+    },
+    yicai: {
+        id: 11,
+        cn: '第一财经',
+        url: 'http://www.yicai.com/',
+        max
+    },
+    ft: {
+        id: 12,
+        cn: 'ft中文网',
+        url: 'http://www.ftchinese.com',
         max
     }
 };

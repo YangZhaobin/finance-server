@@ -1,15 +1,15 @@
 
 const cheerio = require('cheerio');
-const config = require('../../const/web_const');
 const server = require('../curl');
-const Helpers = require('../../utils/helpers/index');
+const config = require('../../const/web_const');
 
-const from = config.tencent.cn;
+const from = config.sina.cn;
 
 function analyzeArtical($, url) {
-    let title = Helpers.unescapeText($('.qq_conent .LEFT h1').html());
-    let content = Helpers.unescapeText($('.qq_conent .content-article').html());
-    let published_at = Helpers.unescapeText($('.qq_conent .a-src-time').html());
+    let title = $('h1.main-title').eq(0).html().trim();
+    let content = $('#artibody').html();
+    let published_at = $('#top_bar .date').eq(0).html();
+    let f = $('#top_bar .source.ent-source').eq(0).html();
     content = `
         ${content}
         <br>
@@ -21,18 +21,18 @@ function analyzeArtical($, url) {
     `;
     return {
         title,
-        url,
         content,
+        url,
         published_at,
-        from
+        from: f
     };
 }
 
 exports.crawlArtical = async (url) => {
 
-    let data = await server.crawler(url);
-    
-    let $ = cheerio.load(data);
+    let data = await server.crawler(url, 'utf-8');
+
+    let $ = cheerio.load(data, {decodeEntities: false});
             
     let artical = await analyzeArtical($, url);
 
